@@ -53,6 +53,10 @@ npm run dev
 ### 4️⃣ Acessar a API
 - API: [http://localhost:3000/carros](http://localhost:3000/carros)  
 - Swagger Docs: [http://localhost:3000/docs](http://localhost:3000/docs)
+- Para consultar um EndPont é necessário configurar a forma de acesso:
+    - O projeto usa autorização tipo Basica
+        . Username : master
+        . Password : master%123
 
 ---
 
@@ -76,7 +80,7 @@ Content-Type: application/json
 {
   "nome": "Fusca",
   "descricao": "Carro clássico",
-  "tipo": "Classico",
+  "tipo": "Clássicos",
   "ativo": true
 }
 ```
