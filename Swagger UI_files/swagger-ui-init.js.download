@@ -1,0 +1,269 @@
+
+window.onload = function() {
+  // Build a system
+  var url = window.location.search.match(/url=([^&]+)/);
+  if (url && url.length > 1) {
+    url = decodeURIComponent(url[1]);
+  } else {
+    url = window.location.origin;
+  }
+  var options = {
+  "swaggerDoc": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API Carros",
+      "version": "1.0.0",
+      "description": "Documentação da API para consulta e gerenciamento de veículos"
+    },
+    "paths": {
+      "/carros": {
+        "get": {
+          "summary": "Lista todos os carros",
+          "tags": [
+            "Carros"
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de todos os carros",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Cria um novo carro",
+          "tags": [
+            "Carros"
+          ],
+          "requestBody": {
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Carro criado com sucesso"
+            },
+            "400": {
+              "description": "Requisição inválida (campos obrigatórios ou formato incorreto)"
+            }
+          }
+        }
+      },
+      "/carros/{id}": {
+        "get": {
+          "summary": "Busca um carro pelo ID",
+          "tags": [
+            "Carros"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID do carro"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Carro encontrado"
+            },
+            "404": {
+              "description": "Carro não encontrado"
+            }
+          }
+        },
+        "patch": {
+          "summary": "Atualiza um carro pelo ID",
+          "tags": [
+            "Carros"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID do carro a ser atualizado"
+            }
+          ],
+          "requestBody": {
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Carro atualizado com sucesso"
+            },
+            "404": {
+              "description": "Carro não encontrado"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Deleta um carro pelo ID",
+          "tags": [
+            "Carros"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID do carro a ser deletado"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Carro deletado com sucesso"
+            },
+            "404": {
+              "description": "Carro não encontrado"
+            }
+          }
+        }
+      },
+      "/carros/tipo/{tipo}": {
+        "get": {
+          "summary": "Busca carros pelo tipo",
+          "tags": [
+            "Carros"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "tipo",
+              "schema": {
+                "type": "string"
+              },
+              "required": true,
+              "description": "Tipo do carro (ex: Classicos, Esportivo, Luxo)"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de carros encontrados"
+            },
+            "404": {
+              "description": "Nenhum carro encontrado"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Carro": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 1
+            },
+            "nome": {
+              "type": "string",
+              "example": "Corolla"
+            },
+            "descricao": {
+              "type": "string",
+              "example": "Sedan confortável e econômico"
+            },
+            "tipo": {
+              "type": "string",
+              "example": "Sedan"
+            },
+            "ativo": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "CarroInput": {
+          "type": "object",
+          "required": [
+            "nome",
+            "descricao",
+            "tipo",
+            "ativo"
+          ],
+          "properties": {
+            "nome": {
+              "type": "string",
+              "example": "Corolla"
+            },
+            "descricao": {
+              "type": "string",
+              "example": "Sedan confortável e econômico"
+            },
+            "tipo": {
+              "type": "string",
+              "example": "Sedan"
+            },
+            "ativo": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "tags": []
+  },
+  "customOptions": {}
+};
+  url = options.swaggerUrl || url
+  var urls = options.swaggerUrls
+  var customOptions = options.customOptions
+  var spec1 = options.swaggerDoc
+  var swaggerOptions = {
+    spec: spec1,
+    url: url,
+    urls: urls,
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+      SwaggerUIBundle.plugins.DownloadUrl
+    ],
+    layout: "StandaloneLayout"
+  }
+  for (var attrname in customOptions) {
+    swaggerOptions[attrname] = customOptions[attrname];
+  }
+  var ui = SwaggerUIBundle(swaggerOptions)
+
+  if (customOptions.oauth) {
+    ui.initOAuth(customOptions.oauth)
+  }
+
+  if (customOptions.preauthorizeApiKey) {
+    const key = customOptions.preauthorizeApiKey.authDefinitionKey;
+    const value = customOptions.preauthorizeApiKey.apiKeyValue;
+    if (!!key && !!value) {
+      const pid = setInterval(() => {
+        const authorized = ui.preauthorizeApiKey(key, value);
+        if(!!authorized) clearInterval(pid);
+      }, 500)
+
+    }
+  }
+
+  if (customOptions.authAction) {
+    ui.authActions.authorize(customOptions.authAction)
+  }
+
+  window.ui = ui
+}
