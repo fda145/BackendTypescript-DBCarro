@@ -36,7 +36,7 @@ A documentação interativa está disponível via **Swagger/OpenAPI**.
 
 ### 1️⃣ Clonar o repositório
 ```bash
-git clone https://github.com/seu-usuario/nome-do-repo.git
+git clone https://github.com/fda145/BackendTypescript-DBCarro.git
 cd nome-do-repo
 ```
 
