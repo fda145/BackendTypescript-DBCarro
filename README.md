@@ -57,7 +57,9 @@ npm run dev
     - O projeto usa autorização tipo Basica
         . Username : master
         . Password : master%123
-
+ - Para validar os EndPont's utilizar o software Postman
+    - Importar o arquivo TSBackEnd-Carros.postman_colection.json
+      Neste arquivo já estão configurados todas as rotas do projeto.
 ---
 
 ## 📖 Exemplo de Endpoints
